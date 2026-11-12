@@ -341,6 +341,7 @@ async function sendToHubSpot(kind, d){
   ];
   if (kind === "partnership") base.push({name:"jobtitle", value:d.jobtitle}, {name:"company", value:d.company}, {name:"website", value:d.website});
   const extra = [{name:"origen_campana", value:UTM}];
+  if (d.prio) extra.push({name:"puntaje_ewao", value:d.prio});
   if (d.intereses.length) extra.push({name:"intereses_ewao", value:d.intereses.join(";")});
   const context = {pageUri: location.href, pageName: document.title};
   const hutk = getCookie("hubspotutk"); if (hutk) context.hutk = hutk;
@@ -397,14 +398,14 @@ async function handle(kind, form){
     company = {name:d.company, domain, type:d.tipo_organizacion};
     dealName = `${d.tipo_organizacion} · ${d.company} · ${ini} · ${ym(now)}`;
   }
-  const pts = parts.reduce((s, p) => s + p[1], 0); const prio = prioOf(pts);
+  const pts = parts.reduce((s, p) => s + p[1], 0); const prio = prioOf(pts); d.prio = prio;
   const due = addBusinessDays(now, DAYS[prio]);
   const devNote = kind === "experience" && oferta !== "Operativa";
 
   // UI
   $$(".panel").forEach(p => p.classList.remove("show"));
   const B = $("#behind"); B.classList.add("show"); B.scrollIntoView({behavior:"smooth", block:"start"});
-  $("#behind-mode").textContent = LIVE ? "Modo conectado: el contacto y el correo de confirmación son reales en HubSpot; el resto se muestra como lo haría Make." : "Simulación del sistema EWAO Connect (HubSpot + Make). Así lo vería el equipo de EWAO.";
+  $("#behind-mode").textContent = LIVE ? "Modo conectado: el contacto, su puntaje, el correo de confirmación (A1) y el aviso al equipo (A2) son reales en HubSpot; la creación automática del negocio y la tarea se muestra como lo haría Make." : "Simulación del sistema EWAO Connect (HubSpot + Make). Así lo vería el equipo de EWAO.";
   $("#outputs").innerHTML = "";
 
   const steps = [
@@ -412,10 +413,10 @@ async function handle(kind, form){
     ["Contacto creado o actualizado (sin duplicar)", `Clave única: ${d.email}. Si ya existía, se suma esta nueva relación a su historia.`, "HubSpot"],
     ["A1 · Correo de confirmación enviado", "Respuesta automática en segundos, sin promesas de cupo ni precio.", "HubSpot"],
     company ? ["Organización registrada", `${company.name} (${company.domain}) · ${company.type}. Se busca por dominio antes de crearla.`, "Make → HubSpot"] : null,
-    [`Prioridad ${prio} calculada (${pts} pts)`, parts.length ? parts.map(p => `${p[0]} +${p[1]}`).join(" · ") : "sin señales de urgencia", "Make"],
+    [`Prioridad ${prio} calculada (${pts} pts)`, parts.length ? parts.map(p => `${p[0]} +${p[1]}`).join(" · ") : "sin señales de urgencia", "Landing → HubSpot"],
     ["Relación abierta en el pipeline «Relaciones EWAO»", `${dealName} · etapa Nuevo`, "Make → HubSpot"],
     ["Responsable y próxima acción asignados", `${owner} · «Primer contacto» vence el ${fmt(due)} (${DAYS[prio]} días hábiles)`, "Make → HubSpot"],
-    ["A2 · Aviso interno al responsable", "Correo con el resumen y el enlace al registro.", "Make"],
+    ["A2 · Aviso interno al responsable", "HubSpot avisa por correo al equipo con el resumen del envío y el enlace al contacto.", "HubSpot"],
     ["Primera respuesta personal", devNote ? "Una persona responde con información real: la experiencia está en desarrollo, por eso se ofrece «solicitar información» y no «reservar»." : "Una persona responde con el contenido real y mueve la relación a «Contactado».", "Persona del equipo"]
   ].filter(Boolean);
 
