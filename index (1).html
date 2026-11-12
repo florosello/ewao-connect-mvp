@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EWAO · ¿Cómo quieres participar?</title>
+<style>
+  :root{
+    --green:#1f3b2d; --green-2:#2f5a43; --cream:#f4efe5; --paper:#fbf8f2; --brown:#8b5e3c;
+    --brown-2:#b07d55; --ink:#1d2420; --muted:#5d665f; --line:#d9d0bf; --ok:#2f7a4b; --warn:#a8641d;
+    --serif: Georgia, "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--sans);color:var(--ink);background:var(--paper);line-height:1.5}
+  a{color:var(--green-2)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .demo-banner{background:var(--brown);color:#fff;font-size:13px;text-align:center;padding:6px 12px}
+  .demo-banner.live{background:var(--ok)}
+  header.top{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+  .logo{font-family:var(--serif);font-size:26px;letter-spacing:.18em;color:var(--green);font-weight:700}
+  .logo small{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.12em;color:var(--muted);font-weight:400}
+  nav a{margin-left:20px;font-size:14px;text-decoration:none;color:var(--muted)}
+  .hero{background:linear-gradient(160deg,var(--green) 0%,var(--green-2) 100%);color:#f4efe5;border-radius:18px;padding:56px 48px;margin-bottom:40px}
+  .hero h1{font-family:var(--serif);font-size:42px;line-height:1.15;margin:0 0 14px;max-width:720px}
+  .hero p{font-size:17px;max-width:640px;margin:0;opacity:.92}
+  .hero .tag{display:inline-block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;border:1px solid rgba(244,239,229,.5);border-radius:99px;padding:4px 12px;margin-bottom:18px}
+  h2{font-family:var(--serif);font-size:30px;margin:0 0 6px;color:var(--green)}
+  .sub{color:var(--muted);margin:0 0 24px}
+  .routes{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-bottom:48px}
+  .route{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;cursor:pointer;text-align:left;font:inherit;color:inherit;transition:transform .15s,border-color .15s,box-shadow .15s}
+  .route:hover{transform:translateY(-2px);border-color:var(--green-2);box-shadow:0 6px 18px rgba(31,59,45,.08)}
+  .route.active{border:2px solid var(--green);background:#f1f6f2}
+  .route h3{margin:8px 0 4px;font-size:17px;color:var(--green)}
+  .route p{margin:0;font-size:13.5px;color:var(--muted)}
+  .route .ico{font-size:26px}
+  .route.soon{cursor:default;opacity:.75}
+  .route.soon:hover{transform:none;box-shadow:none;border-color:var(--line)}
+  .pill{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.04em;border-radius:99px;padding:2px 9px;margin-top:10px}
+  .pill.on{background:#e3efe6;color:var(--ok)}
+  .pill.off{background:#f3e7da;color:var(--brown)}
+  .panel{display:none;background:#fff;border:1px solid var(--line);border-radius:16px;padding:32px;margin-bottom:40px}
+  .panel.show{display:block}
+  form .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px}
+  form .full{grid-column:1/-1}
+  label.f{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
+  input[type=text],input[type=email],input[type=url],input[type=number],select,textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:9px;font:inherit;background:var(--paper)}
+  textarea{min-height:76px;resize:vertical}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--green-2);outline-offset:1px}
+  .opts{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px}
+  .opts label{display:flex;gap:6px;align-items:center;font-weight:400}
+  .consent{background:var(--cream);border-radius:12px;padding:16px 18px;font-size:13.5px}
+  .consent label{display:flex;gap:10px;align-items:flex-start;margin:6px 0}
+  .consent small{color:var(--muted)}
+  .note{font-size:13px;color:var(--muted)}
+  .state{display:inline-block;font-size:12px;font-weight:600;border-radius:8px;padding:3px 9px}
+  .state.op{background:#e3efe6;color:var(--ok)}
+  .state.dev{background:#f3e7da;color:var(--brown)}
+  button.cta{background:var(--green);color:#fff;border:0;border-radius:10px;padding:13px 26px;font:600 15px var(--sans);cursor:pointer}
+  button.cta:hover{background:var(--green-2)}
+  button.ghost{background:none;border:1px solid var(--line);border-radius:10px;padding:10px 18px;font:inherit;cursor:pointer;color:var(--muted)}
+  .error{color:#a3342b;font-size:13px;margin-top:8px;min-height:18px}
+
+  /* Simulación de lo que pasa detrás */
+  .behind{display:none;margin-bottom:56px}
+  .behind.show{display:block}
+  .behind h2 small{display:block;font-family:var(--sans);font-size:13px;color:var(--muted);font-weight:400;margin-top:4px}
+  .flow{display:grid;grid-template-columns:1.05fr 1fr;gap:24px;align-items:start}
+  .steps{list-style:none;margin:0;padding:0}
+  .steps li{display:flex;gap:12px;padding:12px 0;border-bottom:1px dashed var(--line);opacity:.25;transition:opacity .35s}
+  .steps li.done{opacity:1}
+  .steps .dot{flex:0 0 26px;height:26px;border-radius:50%;background:var(--line);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
+  .steps li.done .dot{background:var(--ok)}
+  .steps li.human .dot{background:var(--brown)}
+  .steps b{display:block;font-size:14.5px}
+  .steps span{font-size:13px;color:var(--muted)}
+  .who{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--brown);margin-left:6px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:16px}
+  .card h4{margin:0 0 10px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .rec{display:grid;grid-template-columns:140px 1fr;gap:6px 12px;font-size:13.5px}
+  .rec dt{color:var(--muted)}
+  .rec dd{margin:0;font-weight:600}
+  .prio{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:7px;color:#fff;font-weight:700}
+  .prio.A{background:var(--ok)} .prio.B{background:var(--warn)} .prio.C{background:#7d8580}
+  .mail{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:16px;background:#fff}
+  .mail .hd{background:var(--cream);padding:10px 16px;font-size:12.5px;color:var(--muted)}
+  .mail .hd b{color:var(--ink)}
+  .mail .bd{padding:16px 18px;font-size:14px}
+  .mail .bd p{margin:0 0 10px}
+  .stages{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}
+  .stages span{font-size:11px;padding:3px 7px;border-radius:6px;background:#eee9df;color:var(--muted)}
+  .stages span.cur{background:var(--green);color:#fff}
+  footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:12.5px;color:var(--muted)}
+  @media (max-width:760px){
+    .hero{padding:36px 24px}.hero h1{font-size:30px}
+    form .grid,.flow{grid-template-columns:1fr}
+    .rec{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!--
+  =====================================================================
+  EWAO · Landing del MVP (Grupo 7) — lista para GitHub Pages
+  ---------------------------------------------------------------------
+  MODO DEMO (por defecto): no envía datos a ningún lado. Al enviar un
+  formulario muestra, paso a paso, lo que haría el sistema: CRM,
+  priorización, asignación y correos.
+
+  MODO CONECTADO (opcional): completa HUBSPOT abajo con tu Portal ID y
+  los GUID de los dos formularios de HubSpot. Entonces cada envío crea
+  o actualiza el contacto real en HubSpot y dispara el correo de
+  confirmación configurado en ese formulario.
+  =====================================================================
+-->
+<script>
+const HUBSPOT = {
+  portalId: "52304866",                                   // cuenta HubSpot del Grupo 7
+  formExperience: "959d3659-afad-44f4-b5f6-b5336fac9d18",  // formulario "EWAO · Experience" (con correo A1)
+  formPartnership: "b3bdc040-d156-48fe-8bf9-25d5d3225790", // formulario "EWAO · Partnership"
+  subscriptionTypeId: 4142969737                          // tipo de suscripción de novedades
+};
+</script>
+
+<div id="banner" class="demo-banner">Modo demostración · los datos no salen de esta página · todas las personas y organizaciones son ficticias</div>
+
+<div class="wrap">
+  <header class="top">
+    <div class="logo">EWAO<small>CON LA ASOCIACIÓN KEWERIONO</small></div>
+    <nav><a href="#participa">Participa</a><a href="#privacidad">Privacidad</a></nav>
+  </header>
+
+  <section class="hero">
+    <span class="tag">Territorio Waorani · Amazonía ecuatoriana</span>
+    <h1>Comunidades y profesionales trabajando directamente juntos</h1>
+    <p>EWAO conecta las necesidades definidas por la Asociación Keweriono con personas y organizaciones de todo el mundo. Cuéntanos cómo quieres participar y una persona de nuestro equipo te responderá.</p>
+  </section>
+
+  <section id="participa">
+    <h2>¿Cómo quieres participar?</h2>
+    <p class="sub">Elige una opción. Todas llegan al mismo equipo; la diferencia es qué información te pedimos.</p>
+    <div class="routes">
+      <button class="route" data-route="experience" type="button">
+        <div class="ico">🌿</div><h3>Vivir una experiencia</h3>
+        <p>Turismo, voluntariado o investigación en territorio.</p>
+        <span class="pill on">Disponible</span>
+      </button>
+      <button class="route" data-route="partnership" type="button">
+        <div class="ico">🤝</div><h3>Colaborar como organización</h3>
+        <p>Empresas, universidades, fundaciones e inversores.</p>
+        <span class="pill on">Disponible</span>
+      </button>
+      <div class="route soon"><div class="ico">🧺</div><h3>Productos WEMA</h3><p>Artesanía con historia y origen.</p><span class="pill off">Próximamente · márcalo como interés</span></div>
+      <div class="route soon"><div class="ico">🌱</div><h3>Apoyar una iniciativa</h3><p>Donaciones y cooperación.</p><span class="pill off">Próximamente · márcalo como interés</span></div>
+      <div class="route soon"><div class="ico">💻</div><h3>Colaborar a distancia</h3><p>Open Collaboration para profesionales.</p><span class="pill off">Próximamente · márcalo como interés</span></div>
+    </div>
+  </section>
+
+  <!-- ======================= FORMULARIO EXPERIENCE ======================= -->
+  <section id="panel-experience" class="panel" aria-label="Formulario Experience">
+    <h2>Vivir una experiencia</h2>
+    <p class="sub">Te pedimos lo justo para responderte bien. <span id="exp-state"></span></p>
+    <form id="form-experience" novalidate>
+      <div class="grid">
+        <div><label class="f" for="e-fn">Nombre *</label><input id="e-fn" name="firstname" type="text" required></div>
+        <div><label class="f" for="e-ln">Apellido *</label><input id="e-ln" name="lastname" type="text" required></div>
+        <div><label class="f" for="e-em">Email *</label><input id="e-em" name="email" type="email" required></div>
+        <div><label class="f" for="e-co">País *</label><select id="e-co" name="country" required></select></div>
+        <div class="full"><label class="f">Tipo de experiencia *</label>
+          <div class="opts" id="e-type">
+            <label><input type="radio" name="exptype" value="Turismo" required> Turismo</label>
+            <label><input type="radio" name="exptype" value="Voluntariado"> Voluntariado</label>
+            <label><input type="radio" name="exptype" value="Investigación"> Investigación</label>
+          </div>
+        </div>
+        <div><label class="f" for="e-ho">¿Cuándo te gustaría ir? *</label>
+          <select id="e-ho" name="horizonte" required>
+            <option value="">Elige…</option><option>Menos de 3 meses</option><option>3 a 6 meses</option><option>6 a 12 meses</option><option>Sin fecha</option>
+          </select></div>
+        <div><label class="f" for="e-in">Área de interés</label><select id="e-in" name="iniciativa"></select></div>
+        <div><label class="f" for="e-dt">Fechas tentativas</label><input id="e-dt" name="fechas" type="text" placeholder="p. ej., segunda quincena de enero"></div>
+        <div><label class="f" for="e-px">Número de personas</label><input id="e-px" name="personas" type="number" min="1" max="20"></div>
+        <div class="full"><label class="f">¿Te interesa algo más de EWAO?</label><div class="opts" data-interests="exp"></div></div>
+        <div class="full consent">
+          <label><input type="checkbox" name="filtro" required> <span>Entiendo que el acceso al territorio tiene condiciones logísticas y comunitarias que EWAO me explicará antes de cualquier compromiso. *</span></label>
+        </div>
+        <div class="full consent" id="privacidad">
+          <label><input type="checkbox" name="consent_process" required> <span><b>Obligatorio:</b> autorizo a EWAO a usar mis datos para responder y gestionar esta solicitud.</span></label>
+          <label><input type="checkbox" name="consent_news"> <span><b>Opcional:</b> quiero recibir novedades del ecosistema EWAO (nuevas experiencias, productos WEMA, eventos y oportunidades de voluntariado o colaboración). Puedo darme de baja cuando quiera.</span></label>
+          <small>Tratamos tus datos según la Ley Orgánica de Protección de Datos Personales de Ecuador y el RGPD. <a href="#privacidad">Política de privacidad</a>.</small>
+        </div>
+      </div>
+      <p class="error" id="err-experience"></p>
+      <button class="cta" type="button" data-send>Enviar solicitud</button>
+    </form>
+  </section>
+
+  <!-- ======================= FORMULARIO PARTNERSHIP ======================= -->
+  <section id="panel-partnership" class="panel" aria-label="Formulario Partnership">
+    <h2>Colaborar como organización</h2>
+    <p class="sub">Cuéntanos quiénes son y qué podrían aportar. Toda colaboración se valida con la Asociación Keweriono.</p>
+    <form id="form-partnership" novalidate>
+      <div class="grid">
+        <div><label class="f" for="p-fn">Nombre *</label><input id="p-fn" name="firstname" type="text" required></div>
+        <div><label class="f" for="p-ln">Apellido *</label><input id="p-ln" name="lastname" type="text" required></div>
+        <div><label class="f" for="p-em">Email corporativo *</label><input id="p-em" name="email" type="email" required></div>
+        <div><label class="f" for="p-jt">Cargo *</label><input id="p-jt" name="jobtitle" type="text" required></div>
+        <div><label class="f" for="p-or">Organización *</label><input id="p-or" name="company" type="text" required></div>
+        <div><label class="f" for="p-ws">Sitio web *</label><input id="p-ws" name="website" type="text" placeholder="organizacion.org" required></div>
+        <div><label class="f" for="p-ty">Tipo de organización *</label><select id="p-ty" name="tipo_organizacion" required></select></div>
+        <div><label class="f" for="p-co">País *</label><select id="p-co" name="country" required></select></div>
+        <div><label class="f" for="p-in">Iniciativa o área de interés *</label><select id="p-in" name="iniciativa" required></select></div>
+        <div><label class="f" for="p-ho">¿Cuándo les gustaría empezar? *</label>
+          <select id="p-ho" name="horizonte" required>
+            <option value="">Elige…</option><option>Menos de 3 meses</option><option>3 a 6 meses</option><option>6 a 12 meses</option><option>Sin fecha</option>
+          </select></div>
+        <div class="full"><label class="f" for="p-ap">¿Qué podría aportar su organización?</label><textarea id="p-ap" name="aporte" placeholder="Capacidades, recursos, conocimiento, financiamiento…"></textarea></div>
+        <div class="full opts"><label><input type="checkbox" name="reunion"> Queremos agendar una reunión</label></div>
+        <div class="full"><label class="f">Otros intereses en EWAO</label><div class="opts" data-interests="par"></div></div>
+        <div class="full consent">
+          <label><input type="checkbox" name="consent_process" required> <span><b>Obligatorio:</b> autorizo a EWAO a usar mis datos para responder y gestionar esta solicitud.</span></label>
+          <label><input type="checkbox" name="consent_news"> <span><b>Opcional:</b> quiero recibir novedades del ecosistema EWAO (iniciativas, eventos y oportunidades de colaboración). Puedo darme de baja cuando quiera.</span></label>
+          <small>Tratamos tus datos según la Ley Orgánica de Protección de Datos Personales de Ecuador y el RGPD.</small>
+        </div>
+      </div>
+      <p class="error" id="err-partnership"></p>
+      <button class="cta" type="button" data-send>Enviar solicitud</button>
+    </form>
+  </section>
+
+  <!-- ======================= LO QUE PASA DETRÁS ======================= -->
+  <section id="behind" class="behind" aria-live="polite">
+    <h2>Lo que pasa detrás <small id="behind-mode">Simulación del sistema EWAO Connect (HubSpot + Make). Así lo vería el equipo de EWAO.</small></h2>
+    <div class="flow">
+      <div>
+        <ol class="steps" id="steps"></ol>
+        <p style="margin-top:18px"><button class="ghost" type="button" id="again">Probar otro envío</button></p>
+      </div>
+      <div id="outputs"></div>
+    </div>
+  </section>
+
+  <footer>
+    EWAO · Prototipo académico del Grupo 7 (UDD, Marketing Internacional) para el MVP de plataforma digital, CRM y automatización. No es el sitio oficial. Todas las personas, organizaciones y cifras de la demostración son ficticias.
+  </footer>
+</div>
+
+<script>
+/* ---------------- Datos de referencia (en producción: Google Sheet que mantiene EWAO) ---------------- */
+const COUNTRIES = ["Alemania","Argentina","Australia","Brasil","Canadá","Chile","Colombia","Ecuador","España","Estados Unidos","Francia","Italia","Japón","México","Países Bajos","Perú","Reino Unido","Suecia","Suiza","Otro"];
+const INITIATIVES = ["Por definir","Turismo Keweriono","Conservación y biodiversidad","Salud","Educación","Energía","Conectividad","Bioeconomía","WEMA","Cultura"];
+const ORG_TYPES = ["Empresa","Universidad","Fundación u ONG","Organismo público","Operador turístico","Medio","Inversor"];
+const INTERESTS = ["Turismo","Voluntariado","Investigación","Productos WEMA","Donación","Alianza institucional","Open Collaboration","Prensa"];
+// Estado real de cada oferta Experience (supuesto de trabajo; lo valida EWAO)
+const OFFER_STATE = {"Turismo":"En desarrollo","Voluntariado":"Operativa","Investigación":"En desarrollo"};
+// Afinidad tipo de organización ↔ iniciativa (para la prioridad B2B)
+const AFFINITY = {
+  "Universidad":["Conservación y biodiversidad","Educación","Salud","Cultura"],
+  "Empresa":["Energía","Conectividad","Bioeconomía","Turismo Keweriono","WEMA"],
+  "Fundación u ONG":["Salud","Educación","Conservación y biodiversidad","Cultura"],
+  "Organismo público":["Salud","Educación","Conectividad","Energía"],
+  "Operador turístico":["Turismo Keweriono"],
+  "Medio":["Cultura","Conservación y biodiversidad"],
+  "Inversor":["Bioeconomía","Energía","Turismo Keweriono"]
+};
+const STAGES = ["Nuevo","Contactado","En conversación","Propuesta","Comprometido","Concretado","En pausa","Descartado"];
+
+/* ---------------- Utilidades ---------------- */
+const $ = (s, el=document) => el.querySelector(s);
+const $$ = (s, el=document) => [...el.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fill = (sel, items, first) => { const el = $(sel); el.innerHTML = (first ? `<option value="">${first}</option>` : "") + items.map(i => `<option>${esc(i)}</option>`).join(""); };
+function addBusinessDays(d, n){ const r = new Date(d); while(n > 0){ r.setDate(r.getDate()+1); const w = r.getDay(); if(w !== 0 && w !== 6) n--; } return r; }
+const fmt = d => d.toLocaleDateString("es-CL", {day:"2-digit", month:"2-digit", year:"numeric"});
+const ym = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+const UTM = (() => { const p = new URLSearchParams(location.search); const s = p.get("utm_source"), m = p.get("utm_medium"), c = p.get("utm_campaign");
+  return (s || m || c) ? `${s||"-"} / ${m||"-"} / ${c||"-"}` : "directo / - / -"; })();
+const LIVE = !!(HUBSPOT.portalId && HUBSPOT.formExperience && HUBSPOT.formPartnership);
+if (LIVE){ const b = $("#banner"); b.textContent = "Modo conectado · los envíos llegan al HubSpot de prueba del Grupo 7"; b.classList.add("live"); }
+
+/* ---------------- Poblar formularios ---------------- */
+fill("#e-co", COUNTRIES, "Elige…"); fill("#p-co", COUNTRIES, "Elige…");
+fill("#e-in", INITIATIVES); fill("#p-in", INITIATIVES.slice(1), "Elige…");
+fill("#p-ty", ORG_TYPES, "Elige…");
+$$("[data-interests]").forEach(box => { box.innerHTML = INTERESTS.map(i => `<label><input type="checkbox" name="intereses" value="${esc(i)}"> ${esc(i)}</label>`).join(""); });
+
+function showState(){
+  const t = ($('input[name="exptype"]:checked') || {}).value;
+  $("#exp-state").innerHTML = t ? `Estado de esta experiencia: <span class="state ${OFFER_STATE[t]==="Operativa"?"op":"dev"}">${OFFER_STATE[t]}</span>${OFFER_STATE[t]==="Operativa" ? "" : " · por ahora solo recibimos solicitudes de información, no reservas."}` : "";
+}
+$$('input[name="exptype"]').forEach(r => r.addEventListener("change", () => {
+  showState();
+  const map = {"Turismo":"Turismo Keweriono","Investigación":"Conservación y biodiversidad","Voluntariado":"Educación"};
+  $("#e-in").value = map[r.value] || "Por definir";
+}));
+
+/* ---------------- Navegación por rutas ---------------- */
+$$(".route[data-route]").forEach(btn => btn.addEventListener("click", () => {
+  $$(".route").forEach(b => b.classList.remove("active")); btn.classList.add("active");
+  $$(".panel").forEach(p => p.classList.remove("show"));
+  $("#behind").classList.remove("show");
+  const p = $(`#panel-${btn.dataset.route}`); p.classList.add("show"); p.scrollIntoView({behavior:"smooth", block:"start"});
+}));
+$("#again").addEventListener("click", () => {
+  $("#behind").classList.remove("show"); $$("form").forEach(f => f.reset()); showState();
+  $("#participa").scrollIntoView({behavior:"smooth"});
+});
+
+/* ---------------- Reglas de prioridad (sección 7 del plano) ---------------- */
+function scoreExperience(d){
+  const parts = [];
+  const h = {"Menos de 3 meses":3,"3 a 6 meses":2,"6 a 12 meses":1}[d.horizonte] || 0;
+  if (h) parts.push([`horizonte ${d.horizonte.toLowerCase()}`, h]);
+  if (d.fechas && d.personas) parts.push(["indicó fechas y número de personas", 1]);
+  if (d.oferta === "Operativa") parts.push(["la experiencia está operativa", 2]);
+  if (/alianza|referral|referido/i.test(UTM)) parts.push(["llegó por alianza o recomendación", 1]);
+  return parts;
+}
+function scorePartnership(d){
+  const parts = [];
+  const h = {"Menos de 3 meses":2,"3 a 6 meses":2,"6 a 12 meses":1}[d.horizonte] || 0;
+  if (h) parts.push([`horizonte ${d.horizonte.toLowerCase()}`, h]);
+  if (d.reunion) parts.push(["pide reunión", 2]);
+  if ((AFFINITY[d.tipo_organizacion] || []).includes(d.iniciativa)) parts.push([`${d.tipo_organizacion.toLowerCase()} calza con ${d.iniciativa.toLowerCase()}`, 2]);
+  if (/director|gerente|head|jefe|ceo|fundador|founder|presiden|vp|manager|decan|rector|profesor|coordinador/i.test(d.jobtitle)) parts.push(["cargo con capacidad de decisión", 1]);
+  return parts;
+}
+const prioOf = pts => pts >= 5 ? "A" : pts >= 3 ? "B" : "C";
+const DAYS = {A:2, B:3, C:5};
+
+/* ---------------- Envío real a HubSpot (solo modo conectado) ---------------- */
+function getCookie(n){ return (document.cookie.split("; ").find(c => c.startsWith(n+"=")) || "").split("=")[1]; }
+async function sendToHubSpot(kind, d){
+  const formId = kind === "experience" ? HUBSPOT.formExperience : HUBSPOT.formPartnership;
+  const url = `https://api.hsforms.com/submissions/v3/integration/submit/${HUBSPOT.portalId}/${formId}`;
+  const base = [
+    {name:"email", value:d.email}, {name:"firstname", value:d.firstname}, {name:"lastname", value:d.lastname}, {name:"country", value:d.country}
+  ];
+  if (kind === "partnership") base.push({name:"jobtitle", value:d.jobtitle}, {name:"company", value:d.company}, {name:"website", value:d.website});
+  const extra = [{name:"origen_campana", value:UTM}];
+  if (d.intereses.length) extra.push({name:"intereses_ewao", value:d.intereses.join(";")});
+  const context = {pageUri: location.href, pageName: document.title};
+  const hutk = getCookie("hubspotutk"); if (hutk) context.hutk = hutk;
+  const body = fields => {
+    const b = {fields, context};
+    if (HUBSPOT.subscriptionTypeId){
+      b.legalConsentOptions = {consent:{consentToProcess:true, text:"Autorizo a EWAO a usar mis datos para responder y gestionar esta solicitud.",
+        communications:[{value:!!d.consent_news, subscriptionTypeId:Number(HUBSPOT.subscriptionTypeId), text:"Quiero recibir novedades del ecosistema EWAO."}]}};
+    }
+    return JSON.stringify(b);
+  };
+  let r = await fetch(url, {method:"POST", headers:{"Content-Type":"application/json"}, body: body(base.concat(extra))});
+  if (!r.ok){ // si falla por un campo opcional, reintenta solo con los campos básicos
+    console.warn("HubSpot rechazó el envío completo, reintentando con campos básicos", await r.text());
+    r = await fetch(url, {method:"POST", headers:{"Content-Type":"application/json"}, body: body(base)});
+  }
+  return r.ok;
+}
+
+/* ---------------- Procesar envío ---------------- */
+function readForm(form){
+  const fd = new FormData(form); const d = {};
+  for (const [k, v] of fd.entries()){ if (k === "intereses") continue; d[k] = typeof v === "string" ? v.trim() : v; }
+  d.intereses = fd.getAll("intereses");
+  d.consent_news = fd.has("consent_news"); d.reunion = fd.has("reunion");
+  return d;
+}
+function validate(form, errEl){
+  const bad = $$("[required]", form).filter(el => el.type === "checkbox" ? !el.checked : el.type === "radio" ? !$(`input[name="${el.name}"]:checked`, form) : !el.value.trim());
+  const email = $('input[type=email]', form);
+  if (email.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) bad.push(email);
+  const names = [...new Set(bad.map(el => { if (el.type === "radio") return "Tipo de experiencia"; const l = el.closest("label") || form.querySelector(`label[for="${el.id}"]`); return (l ? l.textContent : el.name).replace(/[*:]/g,"").trim().split(".")[0].slice(0,60); }))];
+  errEl.textContent = bad.length ? "Falta completar: " + names.join(" · ") : "";
+  if (bad.length) bad[0].focus();
+  return !bad.length;
+}
+
+async function handle(kind, form){
+  const err = $(`#err-${kind}`);
+  if (!validate(form, err)) return;
+  const d = readForm(form); const now = new Date();
+  const name = `${d.firstname} ${d.lastname}`;
+  let tipo, ini, oferta, parts, owner, dealName, company = null;
+  if (kind === "experience"){
+    tipo = `Experience · ${d.exptype}`; ini = d.iniciativa || "Por definir"; oferta = OFFER_STATE[d.exptype];
+    d.horizonte = d.horizonte; d.oferta = oferta;
+    parts = scoreExperience(d); owner = "Operación Experience";
+    dealName = `${d.exptype} · ${name} · ${ini} · ${ym(now)}`;
+  } else {
+    const t = {"Universidad":"Universidad","Fundación u ONG":"Fundación o cooperación","Organismo público":"Fundación o cooperación"}[d.tipo_organizacion] || "Empresa";
+    tipo = `Partnership · ${t}`; ini = d.iniciativa; oferta = "Según iniciativa";
+    parts = scorePartnership(d); owner = "Alianzas";
+    const domain = d.website.replace(/^https?:\/\//,"").replace(/^www\./,"").split("/")[0].toLowerCase();
+    company = {name:d.company, domain, type:d.tipo_organizacion};
+    dealName = `${d.tipo_organizacion} · ${d.company} · ${ini} · ${ym(now)}`;
+  }
+  const pts = parts.reduce((s, p) => s + p[1], 0); const prio = prioOf(pts);
+  const due = addBusinessDays(now, DAYS[prio]);
+  const devNote = kind === "experience" && oferta !== "Operativa";
+
+  // UI
+  $$(".panel").forEach(p => p.classList.remove("show"));
+  const B = $("#behind"); B.classList.add("show"); B.scrollIntoView({behavior:"smooth", block:"start"});
+  $("#behind-mode").textContent = LIVE ? "Modo conectado: el contacto y el correo de confirmación son reales en HubSpot; el resto se muestra como lo haría Make." : "Simulación del sistema EWAO Connect (HubSpot + Make). Así lo vería el equipo de EWAO.";
+  $("#outputs").innerHTML = "";
+
+  const steps = [
+    ["Formulario recibido con consentimiento", `Gestión de la solicitud: sí · Novedades EWAO: ${d.consent_news ? "sí" : "no"} · ${fmt(now)} ${now.toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"})}`, "HubSpot"],
+    ["Contacto creado o actualizado (sin duplicar)", `Clave única: ${d.email}. Si ya existía, se suma esta nueva relación a su historia.`, "HubSpot"],
+    ["A1 · Correo de confirmación enviado", "Respuesta automática en segundos, sin promesas de cupo ni precio.", "HubSpot"],
+    company ? ["Organización registrada", `${company.name} (${company.domain}) · ${company.type}. Se busca por dominio antes de crearla.`, "Make → HubSpot"] : null,
+    [`Prioridad ${prio} calculada (${pts} pts)`, parts.length ? parts.map(p => `${p[0]} +${p[1]}`).join(" · ") : "sin señales de urgencia", "Make"],
+    ["Relación abierta en el pipeline «Relaciones EWAO»", `${dealName} · etapa Nuevo`, "Make → HubSpot"],
+    ["Responsable y próxima acción asignados", `${owner} · «Primer contacto» vence el ${fmt(due)} (${DAYS[prio]} días hábiles)`, "Make → HubSpot"],
+    ["A2 · Aviso interno al responsable", "Correo con el resumen y el enlace al registro.", "Make"],
+    ["Primera respuesta personal", devNote ? "Una persona responde con información real: la experiencia está en desarrollo, por eso se ofrece «solicitar información» y no «reservar»." : "Una persona responde con el contenido real y mueve la relación a «Contactado».", "Persona del equipo"]
+  ].filter(Boolean);
+
+  $("#steps").innerHTML = steps.map((s, i) => `<li class="${s[2]==="Persona del equipo"?"human":""}"><div class="dot">${s[2]==="Persona del equipo"?"✋":i+1}</div><div><b>${esc(s[0])}<span class="who">${esc(s[2])}</span></b><span>${esc(s[1])}</span></div></li>`).join("");
+
+  let liveOk = null;
+  if (LIVE){ try { liveOk = await sendToHubSpot(kind, d); } catch(e){ liveOk = false; console.error(e); } }
+  if (LIVE && !liveOk){ const li = $("#steps li"); li.querySelector("span").textContent = "⚠ HubSpot no respondió. Revisa el Portal ID y los GUID de los formularios (consola del navegador)."; }
+
+  const lis = $$("#steps li");
+  for (let i = 0; i < lis.length; i++){
+    await sleep(i === 0 ? 200 : 650); lis[i].classList.add("done");
+    if (i === 2) renderConfirmation(d, kind, devNote, prio);
+    if (i === 6) renderRecord(d, kind, {tipo, ini, oferta, prio, pts, owner, due, dealName, company});
+    if (i === 7) renderAlert(d, {tipo, prio, pts, parts, owner, due, dealName, company});
+  }
+}
+
+function renderConfirmation(d, kind, devNote, prio){
+  const subj = kind === "experience" ? "Recibimos tu solicitud · EWAO" : "Recibimos la solicitud de su organización · EWAO";
+  const what = kind === "experience" ? `tu interés en ${d.exptype.toLowerCase()} en territorio Waorani` : `el interés de ${esc(d.company)} en colaborar con EWAO`;
+  const html = `<div class="mail"><div class="hd">Para: <b>${esc(d.email)}</b> · Asunto: <b>${subj}</b> · <span class="state op">A1 · automático</span></div><div class="bd">
+    <p>Hola ${esc(d.firstname)}:</p>
+    <p>Gracias por ${what}. Recibimos tu solicitud y una persona de nuestro equipo la revisará y te escribirá en un máximo de ${DAYS[prio]} días hábiles.</p>
+    ${devNote ? "<p>Esta experiencia todavía está en desarrollo junto a la Asociación Keweriono. Por ahora no tomamos reservas; te contaremos cuando existan fechas y condiciones confirmadas.</p>" : ""}
+    ${kind === "partnership" ? "<p>Toda colaboración se define junto a la Asociación Keweriono, que participa en cada decisión sobre su territorio.</p>" : ""}
+    ${d.consent_news ? "<p>Como lo autorizaste, también te enviaremos novedades del ecosistema EWAO. Puedes darte de baja en cualquier momento desde el pie de cada correo.</p>" : ""}
+    <p>Un saludo,<br>Equipo EWAO</p></div></div>`;
+  $("#outputs").insertAdjacentHTML("beforeend", html);
+}
+
+function renderRecord(d, kind, x){
+  const stages = STAGES.map(s => `<span class="${s==="Nuevo"?"cur":""}">${s}</span>`).join("");
+  const html = `<div class="card"><h4>Registro en el CRM · vista del equipo</h4>
+    <dl class="rec">
+      <dt>Contacto</dt><dd>${esc(d.firstname)} ${esc(d.lastname)} · ${esc(d.country)}</dd>
+      ${x.company ? `<dt>Organización</dt><dd>${esc(x.company.name)} · ${esc(x.company.type)}</dd>` : ""}
+      <dt>Intereses</dt><dd>${esc([kind==="experience"?d.exptype:"Alianza institucional", ...d.intereses].filter((v,i,a)=>a.indexOf(v)===i).join(", "))}</dd>
+      <dt>Origen</dt><dd>${esc(UTM)}</dd>
+      <dt>Relación</dt><dd>${esc(x.dealName)}</dd>
+      <dt>Tipo de relación</dt><dd>${esc(x.tipo)}</dd>
+      <dt>Iniciativa</dt><dd>${esc(x.ini)}</dd>
+      <dt>Estado de la oferta</dt><dd>${esc(x.oferta)}</dd>
+      <dt>Prioridad</dt><dd><span class="prio ${x.prio}">${x.prio}</span> ${x.pts} pts</dd>
+      <dt>Responsable</dt><dd>${esc(x.owner)}</dd>
+      <dt>Próxima acción</dt><dd>Primer contacto · ${fmt(x.due)}</dd>
+      <dt>Consentimiento</dt><dd>Gestión: sí · Novedades: ${d.consent_news ? "sí" : "no"}</dd>
+    </dl><div class="stages">${stages}</div></div>`;
+  $("#outputs").insertAdjacentHTML("beforeend", html);
+}
+
+function renderAlert(d, x){
+  const html = `<div class="mail"><div class="hd">Para: <b>${esc(x.owner)}</b> · Asunto: <b>[${x.prio}] Nueva relación · ${esc(x.dealName.split(" · ")[0])} · ${esc(d.firstname)} ${esc(d.lastname)}</b> · <span class="state dev">A2 · interno</span></div><div class="bd">
+    <p>Tienes una nueva relación asignada en HubSpot.</p>
+    <p><b>Prioridad ${x.prio}</b> (${x.pts} pts): ${esc(x.parts.map(p => p[0]).join(", ") || "sin señales de urgencia")}.<br>
+    <b>Próxima acción:</b> primer contacto antes del ${fmt(x.due)}.<br>
+    <b>Recuerda:</b> responde solo con información validada y registra en una nota qué se acordó.</p>
+    <p><a href="#" onclick="return false">Abrir registro en HubSpot →</a></p></div></div>`;
+  $("#outputs").insertAdjacentHTML("beforeend", html);
+}
+
+// Botón normal (no "submit"): funciona también en vistas previas que bloquean envíos de formularios
+$$("button[data-send]").forEach(b => b.addEventListener("click", () => {
+  const form = b.closest("form"); handle(form.id === "form-experience" ? "experience" : "partnership", form);
+}));
+$$("form").forEach(f => f.addEventListener("submit", e => e.preventDefault()));
+</script>
+</body>
+</html>
